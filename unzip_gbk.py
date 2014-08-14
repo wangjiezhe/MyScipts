@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# unzip-gbk.py
+# unzip_gbk.py
 
 import os
 import sys
@@ -11,7 +11,7 @@ from textwrap import dedent
 
 def help():
     help_text = '''\
-            Usage: unzip-gbk[.py] [options] zipfile1 [zipfile2 ...]
+            Usage: unzip_gbk[.py] [options] zipfile1 [zipfile2 ...]
             Options:
             -h --help     : display this help
             -o --outdir   : set output directory
@@ -19,14 +19,14 @@ def help():
     print dedent(help_text)
 
 
-def analyse():
+def analyse(args):
     shortargs = "ho:p:"
     longargs = ["help", "outdir=", "password="]
     outdir = os.getcwdu()
     password = None
 
     try:
-        opts, zipfiles = getopt.getopt(sys.argv[1:], shortargs, longargs)
+        opts, zipfiles = getopt.getopt(args, shortargs, longargs)
     except getopt.GetoptError:
         print "Getopt error!\n"
         help()
@@ -41,17 +41,15 @@ def analyse():
         if opt in ("-p", "--password"):
             password = value
 
-    if zipfiles == []:
-        print "No file to unzip.\n"
-        help()
-        sys.exit()
-
     return outdir, password, zipfiles
 
 
 def unzip(filename, outdir='', password=None):
     print "Unziping " + filename
     infile = zipfile.ZipFile(filename, "r")
+
+    if type(outdir).__name__ != "unicode":
+        outdir = unicode(outdir, 'utf8')
 
     if password:
         infile.setpassword(password)
@@ -73,7 +71,11 @@ def unzip(filename, outdir='', password=None):
 
 
 def main():
-    outdir, password, zipfiles = analyse()
+    outdir, password, zipfiles = analyse(sys.argv[1:])
+    if zipfiles == []:
+        print "No file to unzip.\n"
+        help()
+        sys.exit()
     for filename in zipfiles:
         unzip(filename, outdir, password)
     sys.exit()
