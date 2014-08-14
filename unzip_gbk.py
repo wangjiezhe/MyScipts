@@ -37,7 +37,7 @@ def analyse(args):
             help()
             sys.exit()
         if opt in ("-o", "--outdir"):
-            outdir = value
+            outdir = unicode(value, 'utf8')
         if opt in ("-p", "--password"):
             password = value
 
@@ -47,9 +47,6 @@ def analyse(args):
 def unzip(filename, outdir='', password=None):
     print "Unziping " + filename
     infile = zipfile.ZipFile(filename, "r")
-
-    if type(outdir).__name__ != "unicode":
-        outdir = unicode(outdir, 'utf8')
 
     if password:
         infile.setpassword(password)
