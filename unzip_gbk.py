@@ -11,15 +11,16 @@ from textwrap import dedent
 
 def help():
     help_text = '''\
-            Usage: unzip_gbk[.py] [options] zipfile1 [zipfile2 ...]
+            Usage: %s [options] zipfile1 [zipfile2 ...]
             Options:
             -h --help     : display this help
             -o --outdir   : set output directory
-            -p --password : set password'''
+            -p --password : set password
+            ''' % sys.argv[0]
     print dedent(help_text)
 
 
-def analyse(args):
+def analyse(args=sys.argv[1:]):
     shortargs = "ho:p:"
     longargs = ["help", "outdir=", "password="]
     outdir = os.getcwdu()
@@ -36,9 +37,9 @@ def analyse(args):
         if opt in ("-h", "--help"):
             help()
             sys.exit()
-        if opt in ("-o", "--outdir"):
+        elif opt in ("-o", "--outdir"):
             outdir = unicode(value, 'utf8')
-        if opt in ("-p", "--password"):
+        elif opt in ("-p", "--password"):
             password = value
 
     return outdir, password, zipfiles
@@ -68,7 +69,7 @@ def unzip(filename, outdir='', password=None):
 
 
 def main():
-    outdir, password, zipfiles = analyse(sys.argv[1:])
+    outdir, password, zipfiles = analyse()
     if zipfiles == []:
         print "No file to unzip.\n"
         help()
