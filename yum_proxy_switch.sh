@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 GOAGENT="proxy=http://127.0.0.1:8087"
+SSLCACERT="sslcacert=/home/wangjiezhe/Downloads/googleappengine/goagent/local/CA.crt"
 IPV6="proxy=http://pkuproxy.acg.gd:1898"
 YUM_PATH="/etc/yum.repos.d"
 
@@ -19,6 +20,7 @@ case $1 in
 		for file in $YUM_PATH/*
 		do
 			sed -i -e "/proxy/s@\(.*\)\($GOAGENT\)\(.*\)@\2@" "$file"
+			sed -i -e "s@\(.*\)\($SSLCACERT\)\(.*\)@\2@" "$file"
 			sed -i -e "/proxy/s@\(.*\)\($IPV6\)\(.*\)@# \2@" "$file"
 		done
 		;;
@@ -26,6 +28,7 @@ case $1 in
 		for file in $YUM_PATH/*
 		do
 			sed -i -e "/proxy/s@\(.*\)\($GOAGENT\)\(.*\)@# \2@" "$file"
+			sed -i -e "s@\(.*\)\($SSLCACERT\)\(.*\)@# \2@" "$file"
 			sed -i -e "/proxy/s@\(.*\)\($IPV6\)\(.*\)@\2@" "$file"
 		done
 		;;
@@ -33,6 +36,7 @@ case $1 in
 		for file in $YUM_PATH/*
 		do
 			sed -i -e "/proxy/s@\(.*\)\($GOAGENT\)\(.*\)@# \2@" "$file"
+			sed -i -e "s@\(.*\)\($SSLCACERT\)\(.*\)@# \2@" "$file"
 			sed -i -e "/proxy/s@\(.*\)\($IPV6\)\(.*\)@# \2@" "$file"
 		done
 		;;
