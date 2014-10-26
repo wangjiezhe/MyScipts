@@ -40,6 +40,15 @@ case $1 in
 			sed -i -e "/proxy/s@\(.*\)\($IPV6\)\(.*\)@# \2@" "$file"
 		done
 		;;
+	dev)
+		for file in $YUM_PATH/russianfedora*
+		do
+			sed -i -e "/proxy/s@\(.*\)\($GOAGENT\)\(.*\)@# \2@" "$file"
+			sed -i -e "s@\(.*\)\($SSLCACERT\)\(.*\)@# \2@" "$file"
+			sed -i -e "s@^mirrorlist.*@#&@" "$file"
+			sed -i -e "s@\(.*\)\(baseurl=.*\)\(/releases\)\(.*\)\(/Everything\)\(.*\)@\2/development\4\6@" "$file"
+		done
+		;;
 	*)
 		error
 		;;
