@@ -14,5 +14,5 @@ for dist in pip.get_installed_distributions():
         try:
             call([PIP, 'install', '--upgrade', dist.key])
             # call(PIP + "install --upgrade" + dist.key, shell=True)
-        except pip.PipError, exc:
-            print exc
+        except pip.PipError as exc:
+            print(exc)
