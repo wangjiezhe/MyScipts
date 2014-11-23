@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 # unzip_gbk.py
-'''\
-解决用 gbk 编码压缩的 zip 文件在 utf-8 环境下解压产生的中文文件名乱码问题\
+'''
+解决用 gbk 编码压缩的 zip 文件在 utf-8 环境下解压产生的中文文件名乱码问题
 '''
 
 import os
