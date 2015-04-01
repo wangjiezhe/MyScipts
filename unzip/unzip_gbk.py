@@ -78,12 +78,12 @@ def unzip(filename, outdir='', password=None):
             utf8name = name.decode('gbk')
             print "Extracting " + utf8name
             pathname = os.path.join(outdir, os.path.dirname(utf8name))
-            filename = os.path.join(outdir, utf8name)
+            targetname = os.path.join(outdir, utf8name)
             if not os.path.exists(pathname):
                 os.makedirs(pathname)
             data = infile.read(name)
-            if not os.path.exists(filename):
-                with open(filename, 'w') as myfile:
+            if not os.path.exists(targetname):
+                with open(targetname, 'w') as myfile:
                     myfile.write(data)
 
 
