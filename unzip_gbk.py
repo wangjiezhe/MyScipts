@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 # unzip_gbk.py
 '''
@@ -11,6 +11,8 @@ import getopt
 import zipfile
 from textwrap import dedent
 
+iflist = False
+
 
 def usage():
     '''显示帮助'''
@@ -18,6 +20,7 @@ def usage():
             Usage: %s [options] zipfile1 [zipfile2 ...]
             Options:
             -h --help     : display this help
+            -l --list     : list files
             -o --outdir   : set output directory
             -p --password : set password''' % sys.argv[0]
     print dedent(help_text)
@@ -25,8 +28,8 @@ def usage():
 
 def analyse(args=sys.argv[1:]):
     '''解析命令行参数, 返回输出文件夹, 解压密码和待解压文件'''
-    shortargs = "ho:p:"
-    longargs = ["help", "outdir=", "password="]
+    shortargs = "hlo:p:"
+    longargs = ["help", "list", "outdir=", "password="]
     outdir = os.getcwdu()
     password = None
 
@@ -41,12 +44,30 @@ def analyse(args=sys.argv[1:]):
         if opt in ("-h", "--help"):
             usage()
             sys.exit()
+        elif opt in ("-l", "--list"):
+            global iflist
+            iflist = True
         elif opt in ("-o", "--outdir"):
             outdir = unicode(value, 'utf8')
         elif opt in ("-p", "--password"):
             password = value
 
     return outdir, password, zipfiles
+
+
+def listzip(filename, password=None):
+    '''列出文件内容'''
+    print "Archive: " + filename
+    infile = zipfile.ZipFile(filename, 'r')
+
+    if password:
+        infile.setpassword(password)
+
+    for name in infile.namelist():
+        utf8name = name.decode('gbk')
+        print utf8name
+
+    infile.close()
 
 
 def unzip(filename, outdir='', password=None):
@@ -80,8 +101,14 @@ def main():
         print "No file to unzip."
         usage()
         sys.exit()
-    for filename in zipfiles:
-        unzip(filename, outdir, password)
+
+    if iflist:
+        for filename in zipfiles:
+            listzip(filename, password)
+    else:
+        for filename in zipfiles:
+            unzip(filename, outdir, password)
+
     sys.exit()
 
 
