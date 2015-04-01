@@ -5,7 +5,7 @@ unzip3_gbk.py: Deal with zip files using encoding GB2312/GBK/GB18030
 '''
 
 import os
-import sys
+# import sys
 import argparse
 import zipfile
 # import copy
@@ -36,7 +36,7 @@ class GBKZipFile(zipfile.ZipFile):
         if self.comment:
             self.print_bold('Comment:  ' + self.comment.decode('gb18030'))
         print('{:^10}  {:^19}  {}'.format('Size', 'Modified', 'File Name'))
-        print('{}  {}  {}'.format('='*10, '='*19, '='*11))
+        print('{:=^10}  {:=^19}  {:=<11}'.format('', '', ''))
         size_sum = 0
         for zinfo in self.filelist:
             filename = zinfo.filename
@@ -45,9 +45,9 @@ class GBKZipFile(zipfile.ZipFile):
             print('{:>10}  {}  {}'.format(zinfo.file_size, filetime, filename))
             size_sum += zinfo.file_size
         file_sum = len(self.filelist)
-        print('{}  {}  {}'.format('-'*10, ' '*19, '-'*11))
-        print('{:>10}  {}  {}'.format(str(size_sum), ' '*19,
-                                      str(file_sum) + ' files'))
+        print('{:-^10}  {:^19}  {:-^11}'.format('', '', ''))
+        print('{:>10}  {:^19}  {}'.format(str(size_sum), '',
+                                          str(file_sum) + ' files'))
 
 
 def cenc(name):
