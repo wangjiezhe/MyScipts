@@ -8,10 +8,10 @@
 import os
 import sys
 import getopt
-import zipfile
+from zipfile import ZipFile
 from textwrap import dedent
 
-iflist = False
+IFLIST = False
 
 
 def usage():
@@ -45,8 +45,8 @@ def analyse(args=sys.argv[1:]):
             usage()
             sys.exit()
         elif opt in ("-l", "--list"):
-            global iflist
-            iflist = True
+            global IFLIST
+            IFLIST = True
         elif opt in ("-o", "--outdir"):
             outdir = unicode(value, 'utf8')
         elif opt in ("-p", "--password"):
@@ -58,40 +58,33 @@ def analyse(args=sys.argv[1:]):
 def listzip(filename, password=None):
     '''列出文件内容'''
     print "Archive: " + filename
-    infile = zipfile.ZipFile(filename, 'r')
+    with ZipFile(filename, 'r') as infile:
+        if password:
+            infile.setpassword(password)
 
-    if password:
-        infile.setpassword(password)
-
-    for name in infile.namelist():
-        utf8name = name.decode('gbk')
-        print utf8name
-
-    infile.close()
+        for name in infile.namelist():
+            utf8name = name.decode('gbk')
+            print utf8name
 
 
 def unzip(filename, outdir='', password=None):
     '''解压文件'''
     print "Unziping " + filename
-    infile = zipfile.ZipFile(filename, "r")
+    with ZipFile(filename, "r") as infile:
+        if password:
+            infile.setpassword(password)
 
-    if password:
-        infile.setpassword(password)
-
-    for name in infile.namelist():
-        utf8name = name.decode('gbk')
-        print "Extracting " + utf8name
-        pathname = os.path.join(outdir, os.path.dirname(utf8name))
-        filename = os.path.join(outdir, utf8name)
-        if not os.path.exists(pathname):
-            os.makedirs(pathname)
-        data = infile.read(name)
-        if not os.path.exists(filename):
-            fopen = open(filename, "w")
-            fopen.write(data)
-            fopen.close()
-
-    infile.close()
+        for name in infile.namelist():
+            utf8name = name.decode('gbk')
+            print "Extracting " + utf8name
+            pathname = os.path.join(outdir, os.path.dirname(utf8name))
+            filename = os.path.join(outdir, utf8name)
+            if not os.path.exists(pathname):
+                os.makedirs(pathname)
+            data = infile.read(name)
+            if not os.path.exists(filename):
+                with open(filename, 'w') as myfile:
+                    myfile.write(data)
 
 
 def main():
@@ -102,7 +95,7 @@ def main():
         usage()
         sys.exit()
 
-    if iflist:
+    if IFLIST:
         for filename in zipfiles:
             listzip(filename, password)
     else:
