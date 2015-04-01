@@ -1,5 +1,9 @@
 # -*- coding: utf-8 -*-
+'''
+Use pip to upgrade all packages.
+'''
 
+from __future__ import print_function
 import sys
 import pip
 from subprocess import call
