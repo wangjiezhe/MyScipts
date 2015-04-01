@@ -5,6 +5,7 @@ unzip3_gbk.py: Deal with zip files using encoding GB2312/GBK/GB18030
 '''
 
 import os
+import sys
 import argparse
 import zipfile
 # import copy
@@ -54,20 +55,25 @@ def cenc(name):
     return name is not None and name.encode() or None
 
 
+class MyParser(argparse.ArgumentParser):
+    '''Paring command line options.'''
+    def __init__(self, prog=None):
+        description = 'Extract files from zipfiles using encoding GBK'
+        super().__init__(prog=prog,
+                         description=description)
+        self.add_argument('zipfile', nargs='+')
+        self.add_argument('-l', '--list', action='store_true', dest='islist',
+                          help='list files in zipfiles')
+        self.add_argument('-o', '--outdir', dest='outdir',
+                          help='set output directory')
+        self.add_argument('-p', '--password', dest='password',
+                          help='set password')
+
+
 def main():
     '''Parse argument, list or extract zip files.'''
-    description = 'Extract files from zipfiles using encoding GB18030'
-    parser = argparse.ArgumentParser(prog='unzip3_gbk',
-                                     description=description)
-    parser.add_argument('zipfile', nargs='+')
-    parser.add_argument('-l', '--list', action='store_true', dest='islist',
-                        help='list files in zipfiles')
-    parser.add_argument('-o', '--outdir', dest='outdir',
-                        help='set output directory')
-    parser.add_argument('-p', '--password', dest='password',
-                        help='set password')
-
-    args = parser.parse_args()
+    myparser = MyParser(prog=sys.argv[0])
+    args = myparser.parse_args()
 
     if args.islist:
         for zfile in args.zipfile:
