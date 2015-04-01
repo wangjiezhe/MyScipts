@@ -72,7 +72,7 @@ class MyParser(argparse.ArgumentParser):
 
 def main():
     '''Parse argument, list or extract zip files.'''
-    myparser = MyParser(prog=sys.argv[0])
+    myparser = MyParser()
     args = myparser.parse_args()
 
     if args.islist:
