@@ -26,3 +26,5 @@ sudo install -Dm 755 "${PWD}"/src/mv /usr/local/bin/amv
 
 echo "[1mInstallation succeeded![0m"
 echo "[1mDon't forget to add \"alias cp='acp -g'\" and \"alias mv='amv -g'\" in your bashrc![0m"
+
+rm -rf ${tmpdir}

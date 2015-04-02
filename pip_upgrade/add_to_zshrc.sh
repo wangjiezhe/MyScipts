@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-cat << EOF >> ~/.zshrc
+cat << EOF | tee ~/.zshrc
 
 PIP_UPGRADE="$(pwd)/pip_upgrade.py"
 alias pip-upgrade="sudo python \${PIP_UPGRADE}"

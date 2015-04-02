@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# -*- coding: utf8 -*-
+# -*- coding: utf-8 -*-
 """
 unzip3_gbk.py: Deal with zip files using encoding GB2312/GBK/GB18030
 """

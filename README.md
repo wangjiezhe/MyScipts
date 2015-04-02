@@ -7,10 +7,10 @@ Some Scripts that I usually use.
 * [chmod][2]: Change file mode bits recursively (esp. when copy files from ms-doc filesystem)
 * [dfc](3): Display file system space usage using graph and colors
 * [dog][4]: A vastly better cat
-* [pip_upgrade][5]: Use pip to upgrade all packages
+* [pip_upgrade][5]: Use pip to upgrade all python packages
 * [unzip_gbk][6]: Deal with zip files using encoding GB2312/GBK/GB18030
 * [wine_directory][7]: Add wine directory to dashboard
-* [yum_proxy_switch][8]: Switch proxy configuration for repos in /etc/yum.repos.d/
+* [yum_proxy_switch][8]: Switch proxy configuration for repos in /etc/yum.repos.d
 
 
 [1]: ./advcp/advcp_install.sh

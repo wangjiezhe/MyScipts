@@ -31,3 +31,4 @@ make
 sudo make prefix=/usr/local install
 
 echo "[1mInstallation succeed![0m"
+rm -rf ${tmpdir}

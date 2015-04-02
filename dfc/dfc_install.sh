@@ -18,7 +18,7 @@ check_and_preinstall() {
 }
 
 tmpdir=$(mktemp -t -d dfc.XXXXXX)
-cd $tmpdir
+cd ${tmpdir}
 
 echo "[1mDownloading build configuration from archlinux.org ...[0m"
 curl -o PKGBUILD $PROXY https://projects.archlinux.org/svntogit/community.git/plain/trunk/PKGBUILD?h=packages/dfc
@@ -27,7 +27,7 @@ source PKGBUILD
 
 echo "[1mDownloading source file for dfc[0m"
 curl -O $PROXY $source
-echo "[1mSucceed[0m"
+echo "[1mDownloading Succeed[0m"
 tar xf ${pkgname}-${pkgver}.tar.gz
 cd ${pkgname}-${pkgver}
 
@@ -36,3 +36,6 @@ check_and_preinstall
 cmake .
 make
 sudo make install
+
+echo "[1mInstallation Succeed[0m"
+rm -rf ${tmpdir}
