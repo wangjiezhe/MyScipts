@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf8 -*-
-'''
+"""
 unzip3_gbk.py: Deal with zip files using encoding GB2312/GBK/GB18030
-'''
+"""
 
 import os
 # import sys
@@ -13,7 +13,7 @@ import datetime
 
 
 class GBKZipFile(zipfile.ZipFile):
-    '''Class with methods to list, extract zip files using encoding GB18030.'''
+    """Class with methods to list, extract zip files using encoding GB18030."""
     def __init__(self, filename):
         super().__init__(filename, mode='r')
         # self.filelist_old = copy.deepcopy(self.filelist)
@@ -25,13 +25,13 @@ class GBKZipFile(zipfile.ZipFile):
 
     @staticmethod
     def print_bold(text):
-        '''Print bold text.'''
+        """Print bold text."""
         bold = '\033[1m'
         endc = '\033[0m'
         print(bold + text + endc)
 
     def pprintdir(self):
-        '''Print a table of contents of the zip files more elegantly.'''
+        """Print a table of contents of the zip files more elegantly."""
         self.print_bold('Archive:  ' + os.path.basename(self.filename))
         if self.comment:
             self.print_bold('Comment:  ' + self.comment.decode('gb18030'))
@@ -56,7 +56,7 @@ def cenc(name):
 
 
 class MyParser(argparse.ArgumentParser):
-    '''Paring command line options.'''
+    """Paring command line options."""
     def __init__(self, prog=None):
         description = 'Extract files from zipfiles using encoding GBK'
         super().__init__(prog=prog,
@@ -71,7 +71,7 @@ class MyParser(argparse.ArgumentParser):
 
 
 def main():
-    '''Parse argument, list or extract zip files.'''
+    """Parse argument, list or extract zip files."""
     myparser = MyParser()
     args = myparser.parse_args()
 

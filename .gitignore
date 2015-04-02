@@ -4,3 +4,4 @@
 *.pyo
 .ropeproject/
 __pycache__/
+.idea/
